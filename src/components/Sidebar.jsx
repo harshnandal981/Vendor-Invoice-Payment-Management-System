@@ -20,12 +20,12 @@ const navSummary = [
 ]
 
 export default function Sidebar({ collapsed, mobileOpen, onClose, onToggleCollapse }) {
-  const sidebarWidth = collapsed ? 'lg:w-[84px]' : 'lg:w-[256px]'
+  const sidebarWidth = collapsed ? 'lg:w-[76px]' : 'lg:w-[256px]'
 
   const content = (
     <div className="flex h-full flex-col overflow-y-auto bg-[#0f1115] text-white">
-      <div className="flex items-center justify-between border-b border-white/10 px-5 py-5">
-        <div className="flex items-center gap-3 overflow-hidden">
+      <div className={`flex border-b border-white/10 py-5 ${collapsed ? 'items-center justify-center px-3' : 'items-center justify-between px-5'}`}>
+        <div className={`flex overflow-hidden ${collapsed ? 'justify-center' : 'items-center gap-3'}`}>
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#D4AF37] text-sm font-black text-[#0f1115] shadow-[0_18px_45px_rgba(212,175,55,0.24)]">
             Vx
           </div>
@@ -46,13 +46,15 @@ export default function Sidebar({ collapsed, mobileOpen, onClose, onToggleCollap
           </AnimatePresence>
         </div>
 
-        <button
-          onClick={onToggleCollapse}
-          className="hidden rounded-full border border-white/10 p-2 text-white/70 transition hover:bg-white/10 hover:text-white lg:inline-flex"
-          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-        >
-          {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
-        </button>
+        {!collapsed ? (
+          <button
+            onClick={onToggleCollapse}
+            className="hidden rounded-full border border-white/10 p-2 text-white/70 transition hover:bg-white/10 hover:text-white lg:inline-flex"
+            aria-label="Collapse sidebar"
+          >
+            <ChevronLeft size={16} />
+          </button>
+        ) : null}
 
         <button
           onClick={onClose}
@@ -63,14 +65,29 @@ export default function Sidebar({ collapsed, mobileOpen, onClose, onToggleCollap
         </button>
       </div>
 
-      <div className="flex-1 px-3 py-4">
-        <div className="mb-4 rounded-3xl border border-white/10 bg-white/5 px-4 py-4 shadow-[0_16px_40px_rgba(0,0,0,0.18)]">
-          <p className="text-xs uppercase tracking-[0.25em] text-white/45">This month</p>
-          <p className="mt-2 text-2xl font-semibold text-[#D4AF37]">$248,120</p>
-          <p className="mt-1 text-xs text-white/60">Scheduled payouts</p>
+      {collapsed ? (
+        <div className="hidden justify-center border-b border-white/10 py-4 lg:flex">
+          <button
+            onClick={onToggleCollapse}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/70 transition hover:bg-white/10 hover:text-white"
+            aria-label="Expand sidebar"
+            title="Expand sidebar"
+          >
+            <ChevronRight size={16} />
+          </button>
         </div>
+      ) : null}
 
-        <nav className="space-y-1">
+      <div className={`flex-1 py-4 ${collapsed ? 'px-2' : 'px-3'}`}>
+        {!collapsed ? (
+          <div className="mb-4 rounded-3xl border border-white/10 bg-white/5 px-4 py-4 shadow-[0_16px_40px_rgba(0,0,0,0.18)]">
+            <p className="text-xs uppercase tracking-[0.25em] text-white/45">This month</p>
+            <p className="mt-2 text-2xl font-semibold text-[#D4AF37]">$248,120</p>
+            <p className="mt-1 text-xs text-white/60">Scheduled payouts</p>
+          </div>
+        ) : null}
+
+        <nav className={`space-y-2 ${collapsed ? 'flex flex-col items-center' : ''}`}>
           {navItems.map((item) => {
             const Icon = item.icon
             return (
@@ -78,16 +95,18 @@ export default function Sidebar({ collapsed, mobileOpen, onClose, onToggleCollap
                 key={item.to}
                 to={item.to}
                 onClick={onClose}
+                title={collapsed ? item.label : undefined}
                 className={({ isActive }) =>
                   [
-                    'group flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-200',
+                    'group rounded-2xl text-sm font-medium transition-all duration-200',
+                    collapsed ? 'flex h-14 w-14 items-center justify-center p-0' : 'flex items-center gap-3 px-4 py-3',
                     isActive
                       ? 'bg-white text-[#0f1115] shadow-[0_10px_28px_rgba(255,255,255,0.08)]'
                       : 'text-white/72 hover:bg-white/7 hover:text-white',
                   ].join(' ')
                 }
               >
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/5 transition group-hover:bg-[#D4AF37]/15">
+                <span className={`inline-flex items-center justify-center rounded-xl bg-white/5 transition group-hover:bg-[#D4AF37]/15 ${collapsed ? 'h-10 w-10' : 'h-9 w-9'}`}>
                   <Icon size={18} />
                 </span>
                 <AnimatePresence initial={false}>
@@ -124,13 +143,15 @@ export default function Sidebar({ collapsed, mobileOpen, onClose, onToggleCollap
         ) : null}
       </div>
 
-      <div className="border-t border-white/10 p-4">
-        <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 to-white/5 p-4">
-          <p className="text-xs uppercase tracking-[0.25em] text-white/45">Risk signal</p>
-          <p className="mt-2 text-sm font-semibold text-white">3 invoices require attention</p>
-          <p className="mt-1 text-xs text-white/60">Overdue and duplicate checks run daily.</p>
+      {!collapsed ? (
+        <div className="border-t border-white/10 p-4">
+          <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 to-white/5 p-4">
+            <p className="text-xs uppercase tracking-[0.25em] text-white/45">Risk signal</p>
+            <p className="mt-2 text-sm font-semibold text-white">3 invoices require attention</p>
+            <p className="mt-1 text-xs text-white/60">Overdue and duplicate checks run daily.</p>
+          </div>
         </div>
-      </div>
+      ) : null}
     </div>
   )
 
