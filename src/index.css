@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #0f1115;
+  --color-ink-muted: #171a1f;
+  --color-gold: #c9a227;
+  --color-sand: #f7f6f2;
+  --color-line: #e6e1d7;
+  --color-canvas: #f7f6f2;
+  --shadow-soft: 0 20px 40px -30px rgba(15, 17, 21, 0.35);
+  --font-display: 'Poppins', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
+}
+
+:root {
+  font-family: var(--font-body);
+  color: #0f1115;
+  background:
+    radial-gradient(circle at top left, rgba(201, 162, 39, 0.08), transparent 28%),
+    radial-gradient(circle at top right, rgba(15, 17, 21, 0.05), transparent 24%),
+    #f7f6f2;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(247, 246, 242, 1)),
+    radial-gradient(circle at top, rgba(201, 162, 39, 0.09), transparent 32%),
+    #f7f6f2;
+}
+
+::selection {
+  background: rgba(201, 162, 39, 0.18);
+  color: #0f1115;
+}
+
+#root {
+  min-height: 100vh;
+}
